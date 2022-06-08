@@ -11,7 +11,7 @@ int main(){
     if (info=='y'){
         cout<<"Enter the measurement in feet:";
         cin>>ft;
-        overloadedFunction(ft);
+        overloadedFunction(ft,-1.0);
     }
     else
     overloadedFunction();

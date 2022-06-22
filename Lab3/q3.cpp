@@ -42,7 +42,7 @@ public:
     {
         for (int i=0;i<count;i++){
         cout << "Rate: Rs " << s[i].charge_hour << " per hour" << endl;
-        cout << "Charge: Rs " << s[i].charge_hour * parkedTime << endl;
+        cout << "Charge: Rs " << s[i].charge_hour * s[i].parkedTime << endl;
         cout << "Car ID: " << s[i].carId << endl;
         }
     }

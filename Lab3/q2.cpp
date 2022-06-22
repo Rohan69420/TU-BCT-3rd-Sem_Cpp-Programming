@@ -9,9 +9,9 @@ class numberHandler {
     int num;
 
     public:
-    numberHandler (bool ibool){ //using constructor concept
-        prime=ibool;
-        runAgain=ibool;
+    numberHandler (){ //using constructor concept
+        prime=true;
+        runAgain=true;
     }
 
     void primeChecker(){
@@ -50,7 +50,7 @@ class numberHandler {
 
 };
 int main(){
-    numberHandler N(true); //object with data passed for constructor
+    numberHandler N; //object with data passed for constructor
     N.testingLoop();
 
 }

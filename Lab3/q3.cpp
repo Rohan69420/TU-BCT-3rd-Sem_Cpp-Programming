@@ -2,32 +2,58 @@
 
 using namespace std;
 
-class carpark {
-    private:
-    int carId,charge_hour;
-    float parkedTime;
+class carpark
+{
+private:
+    char ch;
+    bool askAgain;
+    int count;
+    struct car
+    {
+        int carId, charge_hour;
+        float parkedTime;
+    } s[10];
 
-    public:
-    
-    void setData(){
-        cout<<"Enter the car ID, change per hour and parked time: "<<endl;
-        cin>>carId;
-        cin>>charge_hour;
-        cin>>parkedTime;
+public:
+    carpark()
+    {
+        count = 0;
+        askAgain = true;
+    }
 
+    void setData()
+    {
+        while (askAgain)
+        {
+            cout << "Enter the car ID, change per hour and parked time: " << endl;
+            cin >> s[count].carId;
+            cin >> s[count].charge_hour;
+            cin >> s[count].parkedTime;
+            cout << "Do you want to enter data again?" << endl;
+            cin >> ch;
+            if (ch == 'N' || ch == 'n')
+            {
+                askAgain = false;
+            }
+            count++;
+        }
     }
-    void showData(){
-        cout<<"Rate: Rs "<<charge_hour<<" per hour"<<endl;
-        cout<<"Charge: Rs "<<charge_hour*parkedTime<<endl;
-        cout<<"Car ID: "<<carId<<endl;
+    void showData()
+    {
+        for (int i=0;i<count;i++){
+        cout << "Rate: Rs " << s[i].charge_hour << " per hour" << endl;
+        cout << "Charge: Rs " << s[i].charge_hour * s[i].parkedTime << endl;
+        cout << "Car ID: " << s[i].carId << endl;
+        }
     }
-    void setNshow(){
+    void setNshow()
+    {
         setData();
         showData();
     }
-
 };
-int main(){
+int main()
+{
     carpark car;
     car.setNshow();
 }

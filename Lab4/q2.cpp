@@ -9,9 +9,6 @@ class stringOp{
         arr= new char[input.length()+1];
         strcpy(arr,input.c_str());
         l=input.length()+1;
-        if (arr[l]=='\0'){
-        cout<<"ok!"<<endl;
-        }
     }
     void join(stringOp &s){
         newArr=new char[l+s.l+1];

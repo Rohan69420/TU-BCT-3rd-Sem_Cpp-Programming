@@ -5,17 +5,21 @@ using namespace std;
 
 class stringOp{
     public:
-    stringOp(char *inpArr,int len){
-        arr= new char[len];
-        strcpy(arr,inpArr);
-        l=len;
+    stringOp(string input){
+        arr= new char[input.length()+1];
+        strcpy(arr,input.c_str());
+        l=input.length()+1;
+        if (arr[l]=='\0'){
+        cout<<"ok!"<<endl;
+        }
     }
     void join(stringOp &s){
-        arr=new l+s.l;
-        strcat(arr,s.arr); 
+        newArr=new char[l+s.l+1];
+        strcpy(newArr,arr);
+        strcat(newArr,s.arr); 
     }
     void display(){
-    cout<<arr<<endl;
+    cout<<newArr<<endl;
     }
 
     private:
@@ -23,9 +27,9 @@ class stringOp{
     int l;
 };
 int main(){
-    stringOp s1("Engineers are ",14);
-    stringOp s2("creatures of logic",18);
-    s2.join(s1);
-    s2.display();
+    stringOp s1("Engineers are ");
+    stringOp s2("Creatures of logic");
+    s1.join(s2);
+    s1.display();
 
 }

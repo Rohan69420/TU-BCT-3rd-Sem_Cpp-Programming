@@ -37,7 +37,7 @@ class ttime{
     int hour,minute, second;
 };
 int main(){
-    ttime t;
+    //ttime t;
     ttime t1(2,10,30);
     ttime t2(3,30,20);
     t2.addttime(t1);

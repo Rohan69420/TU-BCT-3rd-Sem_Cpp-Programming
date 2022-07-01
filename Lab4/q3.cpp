@@ -2,8 +2,8 @@
 
 class deptMem{
     private:
-    int deptId;
-    std::string deptName;
+    int deptId; 
+    std::string deptName; //dont forget string is in namespace std
     public:
     deptMem(){
         deptId=69420;

@@ -33,12 +33,13 @@ class Complex3 : protected Complex1{
 
     public:
     void difference(Complex2 &c){
-    diffA=a-c.a1;
-    diffB=b-c.b1;
+        cout<<a<<" "<<b;
+    diffA=c.a1-a;
+    diffB=c.b1-b;
     }
 
     void display(){
-    cout<<"Diff: "<<diffA<<"+ i"<<diffB<<endl;
+   // cout<<"Diff: "<<diffA<<"+ i"<<diffB<<endl;
 }
 };
 int main(){

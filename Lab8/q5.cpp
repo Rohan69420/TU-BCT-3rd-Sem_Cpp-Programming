@@ -1,3 +1,7 @@
+// Improvements to make,
+// >Make a binary file
+// >Reinterpret cast into character pointer even when reading
+
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -7,7 +11,7 @@ using namespace std;
 // simpler method
 struct tdata
 {
-    int accountNo, totaBalance;
+    int accountNo, totalBalance;
     string lastName, firstName;
     // int whereTo;
 } t;
@@ -15,60 +19,91 @@ struct tdata
 class transaction
 {
 private:
-    int n, whereTo;
-    fstream file("q5random.txt", ios::in | ios::out); // opening file
+    int whereTo, pos;
+
+    fstream file; // opening file don't initialize here
 
 public:
+    // static int DataCounter=0;
     transaction()
     {
-        // cout<<"Enter the number of records you want to enter:";
-        // cin>>n;
-        // t = new struct tdata[n];
-        n = 0;
+
+        file.open("q5output.bin", std::ios::binary | std::ios::app | std::ios::in);
+        pos = 1;
     }
     void addData()
     {
-        file.seekg(0, ios::end);
         cout << "Enter data to add:\nAccount no, first name, last name, total balance" << endl;
         cin >> t.accountNo;
         cin >> t.firstName;
         cin >> t.lastName;
-        cin >> t.totaBalance;
-        file << t.accountNo << t.firstName << t.lastName << t.totaBalance << "\n";
-        file.seekg(0, ios::beg); // reset head to beginning
-        n++;
+        cin >> t.totalBalance;
+        file.write(reinterpret_cast<char *>(&t), sizeof(struct tdata));
+        //  DataCounter++;
     }
     void deleteData()
     {
         cout << "Which row to delete:";
         cin >> whereTo;
-        ifstream temp("temp.txt", ios::in);
-        for (int i = 0, i < n; i++)
+        file.seekg(0, std::ios::beg);
+        pos = 0; // reset
+        fstream temp;
+        temp.open("temp.bin", std::ios::binary | std::ios::app | std::ios::in);
+        while (file.tellg() != 0)
         {
-            file >> t.accountNo >> t.firstName >> t.lastName >> t.totaBalance;
-            if (i != whereTo - 1)
+            if (pos == whereTo)
             {
-                temp << t.accountNo << t.firstName << t.lastName << t.totaBalance;
+                continue; // delete
             }
-            file.seekg(sizeof(struct tdata), ios::cur);
+            else
+            {
+                file.read(reinterpret_cast<char *>(&t), sizeof(struct tdata));
+                temp.write(reinterpret_cast<char *>(&t), sizeof(struct tdata));
+            }
+            pos++;
         }
-        // delete and rename
-        std::string fileName = "q5random.txt";
-        std::wstring wFileName(fileName.begin(), fileName.end());
-        auto res = DeleteFile(wFileName.c_str());
-
-        rename("temp.txt", "q5random.txt");
+        temp.close();
+        file.close();
+        remove("q5output.bin");
+        rename("temp.bin", "q5output.bin");
+        file.open("q5output.bin", std::ios::in | std::ios::out); // reopen
     }
-    void readAfterSeek(int x)
+    void displayAllData()
     {
-        // ifstream ifile("q5random.txt");
-        file.seekg(sizeof())
+        file.seekg(0, std::ios::beg);
+        pos = 0; // reset
+        while (file.tellg() != EOF)
+        {
+            file.read(reinterpret_cast<char *>(&t), sizeof(struct tdata));
+            cout << t.accountNo << " " << t.firstName << " " << t.lastName << " " << t.totalBalance << endl;
+            pos++;
+        }
     }
 };
+
 int main()
 {
     transaction tr;
-    tr.addData();
-    tr.deleteData();
+    char ch;
+    while (ch != 'x')
+    {
+        cout << "Enter 1 to add data, 2 to delete data, 3 to update data,4 to display data and x to quit:" << endl;
+        cin >> ch;
+        switch (ch)
+        {
+        case '1':
+            tr.addData();
+            break;
+        case '2':
+            tr.deleteData();
+            break;
+        case '3':
+
+            break;
+        case '4':
+            tr.displayAllData();
+            break;
+        }
+    }
     return 0;
 }
